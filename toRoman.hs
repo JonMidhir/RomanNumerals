@@ -9,9 +9,9 @@ values = Map.fromList([(1000, "M"), (900, "CM"), (500, "D"),
 toRoman :: Int -> [Char]
 toRoman 0 = []
 toRoman a
-  | exactValue /= "" = exactValue
+  | isJust exactValue = fromJust exactValue
   | otherwise = highestVal ++ toRoman(remainder)
-  where exactValue  = Map.findWithDefault "" a values
+  where exactValue  = Map.lookup a values
         remainder   = a - (fst nextHighest)
         highestVal  = snd nextHighest
         nextHighest = fromMaybe (0, "") $ Map.lookupLT a values
